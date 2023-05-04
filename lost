@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Countdown Timer</title>
+    <style>
+      body {
+        background-color: black;
+        color: red;
+        font-size: 200px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .green {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer">120:00</div>
+    <script>
+      const timerDiv = document.getElementById('timer');
+      let minutes = 120;
+      let seconds = 0;
+      let countdown = setInterval(updateTimer, 1000);
+
+      function updateTimer() {
+        if (minutes == 2 && seconds == 0) {
+          timerDiv.classList.toggle('green');
+          document.addEventListener('keydown', checkCode);
+          clearInterval(countdown);
+        } else {
+          if (seconds == 0) {
+            minutes--;
+            seconds = 59;
+          } else {
+            seconds--;
+          }
+          let formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+          timerDiv.innerText = `${minutes}:${formattedSeconds}`;
+        }
+      }
+
+      function checkCode(event) {
+        const code = '4 8 15 16 23 42';
+        const input = `${event.key}`.toLowerCase().trim();
+        if (input === code) {
+          timerDiv.classList.toggle('green');
+          minutes = 120;
+          seconds = 0;
+          countdown = setInterval(updateTimer, 1000);
+          document.removeEventListener('keydown', checkCode);
+        }
+      }
+    </script>
+  </body>
+</html>
